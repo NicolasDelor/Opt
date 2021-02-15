@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Action } from 'rxjs/internal/scheduler/Action';
 import actionData from '../json/actions.json';
-import {Actions} from '../models/actions/actions.model';
+import {Action as ActionModel} from '../models/actions/actions.model';
 
 @Component({
   selector: 'app-actions',
@@ -10,9 +10,11 @@ import {Actions} from '../models/actions/actions.model';
 })
 export class ActionsComponent implements OnInit {
 
-  actionList = actionData as Actions[];
+  actionList: ActionModel[];
 
-  constructor() { }
+  constructor() {
+    this.actionList = actionData.map(action => new ActionModel(action));
+  }
 
   ngOnInit(): void {
   }

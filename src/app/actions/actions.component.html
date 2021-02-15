@@ -1,4 +1,3 @@
-<p>actions works!</p>
-<div *ngFor="let action in actionList">
-  <h2>{{action.id}}</h2>
+<div *ngFor="let action of actionList">
+  <h2>{{action.definition.effect !== null ? action.definition.effect : "No idea"}}</h2>
 </div>
