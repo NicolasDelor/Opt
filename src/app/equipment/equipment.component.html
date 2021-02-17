@@ -1,0 +1,13 @@
+<p>app-equipment work</p>
+
+<div *ngFor="let equipment of equipmentList;  let i=index">
+    <div *ngIf="i<10">
+  <h2>{{equipment.title.fr !== null ? equipment.title.fr : "No idea"}}</h2>
+  <p>Level : {{equipment.definition.item.level}}</p>
+  <ul>
+    <li>
+      {{equipment.definition.equipEffects}}
+    </li>
+  </ul>
+</div>
+</div>

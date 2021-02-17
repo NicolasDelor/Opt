@@ -1,20 +1,20 @@
 import {DefinitionMap} from '@angular/compiler/src/render3/view/util';
 
 class Definition {
-  item: Items;
+  item: Item;
   useEffect: [];
   useCriticalEffects: [];
-  equipEffects: EquipeEffects;
+  equipEffects: IdEffect[]; // id auto-incr
 
-  constructor(item: Items, useEffect: [], useCriticalEffects: [], equipEffects: EquipeEffects) {
-    this.item = item;
+  constructor({item = {}, useEffect = null, useCriticalEffects = null, equipEffects = []} = {}) {
+    this.item = new Item(item);
     this.useEffect = useEffect;
     this.useCriticalEffects = useCriticalEffects;
-    this.equipEffects = equipEffects;
+    this.equipEffects = IdEffect[equipEffects.length]; // id auto-incr
   }
 }
 
-class Items {
+class Item {
   id: number;
   level: number;
   baseParameters: BaseParameters;
@@ -22,6 +22,21 @@ class Items {
   graphicParameters: GraphicParameters;
   properties: [];
 
+  constructor({
+                id = null,
+                level = null,
+                baseParameters = {},
+                useParameters = {},
+                graphicParameters = {},
+                properties = null
+              } = {}) {
+    this.id = id;
+    this.level = level;
+    this.baseParameters = new BaseParameters(baseParameters);
+    this.useParameters = new UseParameters(useParameters);
+    this.graphicParameters = new GraphicParameters(graphicParameters);
+    this.properties = properties;
+  }
 }
 
 class BaseParameters {
@@ -32,6 +47,21 @@ class BaseParameters {
   minimumShardSlotNumber: number;
   maximumShardSlotNumber: number;
 
+  constructor({
+                itemTypeId = null,
+                itemSetId = null,
+                rarity = null,
+                bindType = null,
+                minimumShardSlotNumber = null,
+                maximumShardSlotNumber = null
+              } = {}) {
+    this.itemTypeId = itemTypeId;
+    this.itemSetId = itemSetId;
+    this.rarity = rarity;
+    this.bindType = bindType;
+    this.minimumShardSlotNumber = minimumShardSlotNumber;
+    this.maximumShardSlotNumber = maximumShardSlotNumber;
+  }
 }
 
 class UseParameters {
@@ -46,30 +76,45 @@ class UseParameters {
   useTestNoBorderCell: boolean;
   useWorldTarget: number;
 
+  constructor({
+                useCostAp = null,
+                useCostMp = null,
+                useCostWp = null,
+                useRangeMin = null,
+                useRangeMax = null,
+                useTestFreeCell = false,
+                useTestLos = false,
+                useTestOnlyLine = false,
+                useTestNoBorderCell = false,
+                useWorldTarget = null
+              } = {}) {
+    this.useCostAp = useCostAp;
+    this.useCostMp = useCostMp;
+    this.useCostWp = useCostWp;
+    this.useRangeMin = useRangeMin;
+    this.useRangeMax = useRangeMax;
+    this.useTestFreeCell = useTestFreeCell;
+    this.useTestLos = useTestLos;
+    this.useTestOnlyLine = useTestOnlyLine;
+    this.useTestNoBorderCell = useTestNoBorderCell;
+    this.useWorldTarget = useWorldTarget;
+  }
 }
 
 class GraphicParameters {
   gfxId: number;
   femaleGfxId: number;
 
-  constructor(gfxId: number, femaleGfxId: number) {
+  constructor({gfxId = null, femaleGfxId = null} = {}) {
     this.gfxId = gfxId;
     this.femaleGfxId = femaleGfxId;
   }
 }
 
-class EquipeEffects {
-  undifined: Undifined; // undefined
-
-  constructor(undifined: Undifined) {
-    this.undifined = undifined;
-  }
-}
-
-class Undifined { // undefined
+class IdEffect {
   effect: Effect;
 
-  constructor(effect: Effect) {
+  constructor({effect = null} = {}) {
     this.effect = effect;
   }
 }
@@ -77,7 +122,7 @@ class Undifined { // undefined
 class Effect {
   definition: DefinitionEffect;
 
-  constructor(definition: DefinitionEffect) {
+  constructor({definition = null} = {}) {
     this.definition = definition;
   }
 }
@@ -87,23 +132,26 @@ class DefinitionEffect {
   actionId: number;
   areaShape: number;
   areaSize: number;
-  params: UndefinedEffect; // undefined
+  params: IdParams; // undefined
 
-  constructor(id: number, actionId: number, areaShape: number, areaSize: number, params: UndefinedEffect) {
+  constructor({id = null, actionId = null, areaShape = null, areaSize = null, params = {}} = {}) {
     this.id = id;
     this.actionId = actionId;
     this.areaShape = areaShape;
     this.areaSize = areaSize;
-    this.params = params;
+    this.params = new IdParams(params);
   }
 }
 
-class UndefinedEffect {
-  undefined: number; // undefined
+class IdParams {
+  id: number; // undefined
 
+  constructor({id = null} = {}) {
+    this.id = id;
+  }
 }
 
-// ---
+// Description -----
 
 class Description {
   fr: string;
@@ -119,6 +167,8 @@ class Description {
   }
 }
 
+// Title -----
+
 class Title {
   fr: string;
   en: string;
@@ -133,8 +183,15 @@ class Title {
   }
 }
 
-export class Equipment {
+export class EquipmentModel {
   definition: Definition;
   description: Description;
   title: Title;
+
+  constructor({definition = {}, description = {}, title = {}} = {}) {
+    this.definition = new Definition(definition);
+    this.description = new Description(description);
+    this.title = new Title(title);
+  }
 }
+

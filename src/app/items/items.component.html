@@ -1,1 +1,5 @@
-<p>items works!</p>
+<p>items work</p>
+
+<div *ngFor="let equipment of equipmentList">
+  <h2>{{equipment.title.fr !== null ? equipment.title.fr : "No idea"}}</h2>
+</div>
