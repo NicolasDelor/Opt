@@ -5,9 +5,9 @@
   <h2>{{equipment.title.fr !== null ? equipment.title.fr : "No idea"}}</h2>
   <p>Level : {{equipment.definition.item.level}}</p>
   <ul>
-    <li>
-      {{equipment.definition.equipEffects}}
+    <li *ngFor="let effect of equipment.definition.equipEffects">
+      {{ effect.definition.id !== null ? "Effect ID : "+effect.definition.id : "Unknown Effect" }}
     </li>
   </ul>
-</div>
+</div>e
 </div>
