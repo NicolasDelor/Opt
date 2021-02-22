@@ -6,8 +6,11 @@
   <p>Level : {{equipment.definition.item.level}}</p>
   <ul>
     <li *ngFor="let effect of equipment.definition.equipEffects">
-      {{ effect.definition.id !== null ? "Effect ID : "+effect.definition.id : "Unknown Effect" }}
+      <div  *ngFor="let action of actionList">
+        {{action.definition.id == effect.definition.actionId  ? action.definition.effect : ""}}
+      </div>
+          Calcul : {{effect.definition.params[1]}}*{{equipment.definition.item.level}}+{{effect.definition.params[0]}}
     </li>
   </ul>
-</div>e
+</div>
 </div>

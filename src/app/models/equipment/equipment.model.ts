@@ -135,7 +135,6 @@ class GraphicParameters {
 
 class Effect {
     definition: DefinitionEffect;
-
     constructor({ definition = {} } = {}) {
         this.definition = new DefinitionEffect(definition);
     }
@@ -146,7 +145,7 @@ class DefinitionEffect {
     actionId: number;
     areaShape: number;
     areaSize: number[]; // number;
-    params: number[]; // IdParams; // undefined
+    params: Param[]; 
 
     constructor({
         id = null,
@@ -160,6 +159,24 @@ class DefinitionEffect {
         this.areaShape = areaShape;
         this.areaSize = areaSize;
         this.params = params; // new IdParams(params);
+    }
+}
+
+
+class Param {
+    definitionParam: ParamEffect;
+    constructor({ definitionParam = {} } = {}) {
+        this.definitionParam = new ParamEffect(definitionParam);
+    }
+}
+
+
+class ParamEffect {
+    id: number;
+    constructor({
+        id = null,
+    } = {}) {
+        this.id = id;
     }
 }
 
